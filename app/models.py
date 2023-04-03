@@ -7,6 +7,7 @@ Base = declarative_base()
 
 engine = create_engine('sqlite:///admissions.db', echo=True)
 
+
 class Student(Base):
 
     __tablename__ = 'students'
@@ -63,6 +64,7 @@ class Student(Base):
     def find_by_id(self, id):
         return self.query.filter_by(id=id).first()
 
+
 class College(Base):
 
     __tablename__ = 'colleges'
@@ -80,8 +82,9 @@ class College(Base):
     application_deadline = Column(String)
     application_status = Column(String)
     application_date = Column(String)
-    
-    students = relationship("Student", backref=backref('colleges', order_by=id))
+
+    students = relationship(
+        "Student", backref=backref('colleges', order_by=id))
 
     def __init__(self, name, address, city, state, zip, phone, email, website, application_fee, application_deadline, application_status, application_date, student):
         self.name = name
@@ -101,71 +104,81 @@ class College(Base):
     def __repr__(self):
         return '<College %r>' % (self.name)
 
-      
     def students(self):
         return self.students
 
 
-
 class AdmissionsApplication(Base):
-  
-      __tablename__ = 'admissions_applications'
-  
-      id = Column(Integer, primary_key=True)
-      name = Column(String)
-      address = Column(String)
-      city = Column(String)
-      state = Column(String)
-      zip = Column(String)
-      phone = Column(String)
-      email = Column(String)
-      website = Column(String)
-      application_fee = Column(String)
-      application_deadline = Column(String)
-      application_status = Column(String)
-      application_date = Column(String)
-      student_id = Column(Integer, ForeignKey('students.id'))
-      student = relationship("Student", backref=backref('admissions_applications', order_by=id))
-  
-      def __init__(self, name, address, city, state, zip, phone, email, website, application_fee, application_deadline, application_status, application_date, student):
-          self.name = name
-          self.address = address
-          self.city = city
-          self.state = state
-          self.zip = zip
-          self.phone = phone
-          self.email = email
-          self.website = website
-          self.application_fee = application_fee
-          self.application_deadline = application_deadline
-          self.application_status = application_status
-          self.application_date = application_date
-          self.student = student
-  
-      def __repr__(self):
-          return '<AdmissionsApplication %r>' % (self.name)
-        
-      def applications(self):
-          return self.applications
 
-      def students(self):
-          return self.students
+    __tablename__ = 'admissions_applications'
 
-      def find_by_id(self, id):
-          return self.query.filter_by(id=id).first()
-      
-      def update(self, name, address, city, state, zip, phone, email, website, application_fee, application_deadline, application_status, application_date, student):
-          self.name = name
-          self.address = address
-          self.city = city
-          self.state = state
-          self.zip = zip
-          self.phone = phone
-          self.email = email
-          self.website = website
-          self.application_fee = application_fee
-          self.application_deadline = application_deadline
-          self.application_status = application_status
-          self.application_date = application_date
-          self.student = student
-          self.save()
+    id = Column(Integer, primary_key=True)
+    name = Column(String)
+    address = Column(String)
+    city = Column(String)
+    state = Column(String)
+    zip = Column(String)
+    phone = Column(String)
+    email = Column(String)
+    website = Column(String)
+    application_fee = Column(String)
+    application_deadline = Column(String)
+    application_status = Column(String)
+    application_date = Column(String)
+    student_id = Column(Integer, ForeignKey('students.id'))
+    student = relationship("Student", backref=backref(
+        'admissions_applications', order_by=id))
+
+    def __init__(self, name, address, city, state, zip, phone, email, website, application_fee, application_deadline, application_status, application_date, student):
+        self.name = name
+        self.address = address
+        self.city = city
+        self.state = state
+        self.zip = zip
+        self.phone = phone
+        self.email = email
+        self.website = website
+        self.application_fee = application_fee
+        self.application_deadline = application_deadline
+        self.application_status = application_status
+        self.application_date = application_date
+        self.student = student
+
+    def __repr__(self):
+        return '<AdmissionsApplication %r>' % (self.name)
+
+    def applications(self):
+        return self.applications
+
+    def students(self):
+        return self.students
+
+    def find_by_id(self, id):
+        return self.query.filter_by(id=id).first()
+
+    def update(self, name, address, city, state, zip, phone, email, website, application_fee, application_deadline, application_status, application_date, student):
+        self.name = name
+        self.address = address
+        self.city = city
+        self.state = state
+        self.zip = zip
+        self.phone = phone
+        self.email = email
+        self.website = website
+        self.application_fee = application_fee
+        self.application_deadline = application_deadline
+        self.application_status = application_status
+        self.application_date = application_date
+        self.student = student
+        self.save()
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
