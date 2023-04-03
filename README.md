@@ -10,8 +10,7 @@ This is a web app for managing college admissions. Users can apply to colleges, 
 - Set environment variables or create a configuration file with the necessary parameters for the app, such - as the database URL and secret key.
 #### Usage
 - Activate the virtual environment using pipenv shell.
-- Start the app using flask run.
-- Navigate to localhost:5000 in your web browser to access the app.
+- run your app in your terminal
 #### API Endpoints
 ###### GET /students
 - Returns a list of all students in the database.
