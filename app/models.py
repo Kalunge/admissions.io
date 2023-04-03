@@ -111,6 +111,8 @@ class College(Base):
     def find_by_id(self, id):
         return self.query.filter_by(id=id).first()
 
+    def get_by_college_id(self, college_id):
+        return self.query.filter_by(college_id=college_id).first()
 
 class AdmissionsApplication(Base):
 
