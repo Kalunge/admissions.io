@@ -144,3 +144,9 @@ class AdmissionsApplication(Base):
   
       def __repr__(self):
           return '<AdmissionsApplication %r>' % (self.name)
+        
+      def applications(self):
+          return self.applications
+
+      def students(self):
+          return self.students
