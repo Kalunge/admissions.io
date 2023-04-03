@@ -150,3 +150,6 @@ class AdmissionsApplication(Base):
 
       def students(self):
           return self.students
+
+      def find_by_id(self, id):
+          return self.query.filter_by(id=id).first()
