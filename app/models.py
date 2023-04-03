@@ -108,6 +108,10 @@ class College(Base):
         return self.students
 
 
+    def find_by_id(self, id):
+        return self.query.filter_by(id=id).first()
+
+
 class AdmissionsApplication(Base):
 
     __tablename__ = 'admissions_applications'
