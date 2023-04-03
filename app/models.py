@@ -153,3 +153,19 @@ class AdmissionsApplication(Base):
 
       def find_by_id(self, id):
           return self.query.filter_by(id=id).first()
+      
+      def update(self, name, address, city, state, zip, phone, email, website, application_fee, application_deadline, application_status, application_date, student):
+          self.name = name
+          self.address = address
+          self.city = city
+          self.state = state
+          self.zip = zip
+          self.phone = phone
+          self.email = email
+          self.website = website
+          self.application_fee = application_fee
+          self.application_deadline = application_deadline
+          self.application_status = application_status
+          self.application_date = application_date
+          self.student = student
+          self.save()
