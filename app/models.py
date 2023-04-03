@@ -92,6 +92,10 @@ class College(Base):
     def __repr__(self):
         return '<College %r>' % (self.name)
 
+      
+    def students(self):
+        return self.students
+
 
 class AdmissionsApplication(Base):
   
