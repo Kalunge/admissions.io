@@ -54,6 +54,15 @@ class Student(Base):
     def __repr__(self):
         return '<Student %r>' % (self.name)
 
+    def colleges(self):
+        return self.colleges
+
+    def admissions_applications(self):
+        return self.admissions_applications
+
+    def find_by_id(self, id):
+        return self.query.filter_by(id=id).first()
+
 class College(Base):
 
     __tablename__ = 'colleges'
@@ -95,6 +104,7 @@ class College(Base):
       
     def students(self):
         return self.students
+
 
 
 class AdmissionsApplication(Base):
